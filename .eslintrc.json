@@ -1,0 +1,44 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": false,
+        "es6": true,
+        "node": false,
+        "jquery": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2017,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn",
+        "eqeqeq": "warn",
+        "indent": ["warn", 2],
+        "no-shadow": "warn",
+        "no-shadow-restricted-names": "warn",
+        "no-var": "warn",
+        "prefer-const": "warn",
+        "prefer-template": "warn",
+        "arrow-parens": "warn",
+        "arrow-body-style": "warn",
+        "no-confusing-arrow": "warn",
+        "object-shorthand": ["warn", "always"],
+        "prefer-arrow-callback": "warn"
+    },
+    "globals": {
+        "AS": false,
+        "view": false,
+        "model": false,
+        "showErrorMessage": false
+    },
+    "extends": "eslint:recommended"
+}
