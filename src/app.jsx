@@ -1,5 +1,8 @@
 /* global ReactDOM React */
 import PropTypes from 'prop-types'
+import EventEmitter from 'wolfy87-eventemitter'
+
+window.ee = new EventEmitter()
 
 const my_news = [
   {
@@ -99,8 +102,19 @@ class Add extends React.Component {
   onBtnClickHandler = (e) => {
     e.preventDefault()
     let author = this.author.value
-    let text = this.text.value
-    alert(`${author}\n${text}`)
+    let textEl = this.text
+    let text = textEl.value
+
+    const item = [{
+      author: author,
+      text: text,
+      bigText: '...'
+    }]
+
+    window.ee.emit('News.add', item)
+
+    textEl.value = ''
+    this.setState({textIsEmpty: true})
   }
 
   onFieldChange = (fieldName, e) => {
@@ -144,7 +158,7 @@ class Add extends React.Component {
             ref="alert_button"
             onClick={this.onBtnClickHandler}
             disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}
-          >Show alert
+          >Add News
           </button>
         </form>
     )
@@ -152,12 +166,31 @@ class Add extends React.Component {
 }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      news: my_news
+    }
+  }
+
+  componentDidMount = () => {
+    const self = this
+    window.ee.addListener('News.add', (item) => {
+      const nextNews = item.concat(self.state.news)
+      self.setState({news: nextNews})
+    })
+  }
+
+  componentWillUnmount = () => {
+    window.ee.removeListener('News.add')
+  }
+
   render() {
     return (
         <div className="app">
           <h3>News</h3>
           <Add/>
-          <News data={my_news}/>
+          <News data={this.state.news}/>
         </div>
     )
   }
